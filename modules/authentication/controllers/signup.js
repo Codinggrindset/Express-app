@@ -1,5 +1,5 @@
 const Joi = require('joi');
-const { createCustomError } = require('../../../errors/apiError');
+const { ApiError } = require('../../../utils/errors/apiError');
 const {
   findUserWithEmail,
   createUser,
@@ -30,13 +30,13 @@ const registerUser = async (email, password, firstname, lastname) => {
   });
 
   if (requestValidator.error) {
-    createCustomError(requestValidator.error.message, 400);
+    throw new ApiError(requestValidator.error.message, 400);
   }
 
   const user = await findUserWithEmail(email);
 
   if (user) {
-    createCustomError('User already exists', 400);
+    throw new ApiError('User already exists', 400);
   }
 
   const salt = await makeSalt();

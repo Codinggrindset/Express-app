@@ -1,6 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 const Joi = require('joi');
-const { createCustomError } = require('../../../errors/apiError');
+const { ApiError } = require('../../../utils/errors/apiError');
 const { findUserWithEmail } = require('../../../database/repositories/user');
 const { createToken } = require('../../../utils/jwt');
 const { confirmPassword } = require('../../../utils/bcrypt');
@@ -14,18 +14,18 @@ const logUserIn = async (email, password) => {
   const validateRequest = schema.validate({ email, password });
 
   if (validateRequest.error) {
-    createCustomError(validateRequest.error.message, 400);
+    throw new ApiError(validateRequest.error.message, 400);
   }
 
   const user = await findUserWithEmail(email);
 
   if (!user) {
-    createCustomError('Could not find user', 400);
+    throw new ApiError('Could not find user', 400);
   }
   const check = await confirmPassword(password, user.password);
   console.log('HEREEEE');
   if (!check) {
-    createCustomError('Incorrect password entered', 400);
+    throw new ApiError('Incorrect password entered', 400);
   }
 
   const token = createToken(user._id);

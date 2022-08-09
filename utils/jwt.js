@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 const jwt = require('jsonwebtoken');
 
 const createToken = (id) => {
@@ -5,4 +6,14 @@ const createToken = (id) => {
   return token;
 };
 
-module.exports = { createToken };
+const verify = (token, secret, CustomError, findUserWithId) => jwt.verify(token, secret, async (err, decodedToken) => {
+  if (err) {
+    throw new CustomError('Invalid or no authorization token provided', 401);
+  }
+
+  const thisuser = await findUserWithId(decodedToken.id);
+
+  return thisuser;
+});
+
+module.exports = { createToken, verify };

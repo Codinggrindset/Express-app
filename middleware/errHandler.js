@@ -1,4 +1,4 @@
-const { ApiError } = require('../errors/apiError');
+const { ApiError } = require('../utils/errors/apiError');
 
 // eslint-disable-next-line no-unused-vars
 const handleError = (error, req, res, next) => {
