@@ -5,4 +5,9 @@ class ApiError extends Error {
     this.code = code;
   }
 }
-module.exports = { ApiError };
+
+const createCustomError = (msg, code) => {
+  throw new ApiError(msg, code);
+};
+
+module.exports = { ApiError, createCustomError };

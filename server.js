@@ -1,14 +1,17 @@
 const express = require('express');
 const { connectDb } = require('./database/connection');
-const errHandler = require('./middleware/errHandler');
+const handleError = require('./middleware/errHandler');
+const createNewUser = require('./modules/authentication/routeHandlers/signup');
 const renderHomePage = require('./modules/homeRoute/routeHandlers/home');
 require('dotenv').config();
 
 const app = express();
 
+app.use(express.json('3mb'));
 app.get('/', renderHomePage);
+app.post('/register', createNewUser);
 
-app.use(errHandler);
+app.use(handleError);
 
 const runServer = () => {
   connectDb(process.env.MONGO_URL)
