@@ -10,6 +10,7 @@ const createNewUser = require('./modules/authentication/routeHandlers/signup');
 const renderHomePage = require('./modules/home/routeHandlers/home');
 const changePassword = require('./modules/password/routeHandlers/changePassword');
 const retrieveProfile = require('./modules/profile/routeHandlers/retrieveProfile');
+const getQuestions = require('./modules/questions/routeHandlers/getQuestion');
 const postQuestion = require('./modules/questions/routeHandlers/postQuestion');
 require('dotenv').config();
 
@@ -27,6 +28,7 @@ app.post('/accounts/follow', followUser);
 app.get('/accounts/following', getUrFollowers);
 app.get('/accounts/followers', getOnesYouFollow);
 app.post('/questions', postQuestion);
+app.get('/questions', getQuestions);
 
 app.use(handleError);
 
