@@ -3,7 +3,7 @@ const followOneUser = require('../controllers/followUser');
 
 const followUser = asyncWrapper(async (req, res) => {
   const { id } = req.body;
-  const thisUser = res.locals.thisuser;
+  const { thisUser } = res.locals;
   const result = await followOneUser(id, thisUser);
   res.status(201).json(result);
 });
