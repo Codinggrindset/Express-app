@@ -5,6 +5,7 @@ const verifyToken = require('./modules/authentication/routeHandlers/confirmToken
 const loginUser = require('./modules/authentication/routeHandlers/login');
 const createNewUser = require('./modules/authentication/routeHandlers/signup');
 const renderHomePage = require('./modules/home/routeHandlers/home');
+const changePassword = require('./modules/password/routeHandlers/changePassword');
 const retrieveProfile = require('./modules/profile/routeHandlers/retrieveProfile');
 require('dotenv').config();
 
@@ -12,11 +13,12 @@ const app = express();
 
 app.use(express.json('3mb'));
 app.get('/', renderHomePage);
-app.post('/register', createNewUser);
-app.post('/login', loginUser);
+app.post('/auth/register', createNewUser);
+app.post('/auth/login', loginUser);
 
 app.use(verifyToken);
-app.get('/profile/:mail', retrieveProfile);
+app.post('/auth/password', changePassword);
+app.get('/search/accounts', retrieveProfile);
 
 app.use(handleError);
 

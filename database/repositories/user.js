@@ -7,4 +7,9 @@ const createUser = (email, password, firstname, lastname) => User.create({
 });
 
 const findUserWithId = (id) => User.findById(id);
-module.exports = { findUserWithEmail, createUser, findUserWithId };
+
+const updateUserWithId = (id, a) => User.findByIdAndUpdate(id, a, { new: true });
+
+module.exports = {
+  findUserWithEmail, createUser, findUserWithId, updateUserWithId,
+};
