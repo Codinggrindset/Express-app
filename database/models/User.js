@@ -18,9 +18,9 @@ const userSchema = new mongoose.Schema({
 
   Followers: [],
 
-  Following: [Object],
+  Following: [],
 });
 
-const User = mongoose.model('Dbs', userSchema);
+const User = mongoose.model('QuoraDB', userSchema);
 
 module.exports = { User };

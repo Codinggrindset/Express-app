@@ -8,6 +8,7 @@ const checkToken = async (token) => {
     ApiError('Invalid or no authorization token provided', 401);
   }
   const result = await verify(token, process.env.TOKENSECRET, ApiError, findUserWithId);
+
   return result;
 };
 

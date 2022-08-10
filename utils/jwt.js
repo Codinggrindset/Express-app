@@ -11,9 +11,8 @@ const verify = (token, secret, CustomError, findUserWithId) => jwt.verify(token,
     throw new CustomError('Invalid or no authorization token provided', 401);
   }
 
-  const thisuser = await findUserWithId(decodedToken.id);
-
-  return thisuser;
+  const thisUser = await findUserWithId(decodedToken.id);
+  return thisUser;
 });
 
 module.exports = { createToken, verify };

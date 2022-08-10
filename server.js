@@ -1,6 +1,7 @@
 const express = require('express');
 const { connectDb } = require('./database/connection');
 const handleError = require('./middleware/errHandler');
+const followUser = require('./modules/accounts/routeHandlers/followUser');
 const verifyToken = require('./modules/authentication/routeHandlers/confirmToken');
 const loginUser = require('./modules/authentication/routeHandlers/login');
 const createNewUser = require('./modules/authentication/routeHandlers/signup');
@@ -19,13 +20,14 @@ app.post('/auth/login', loginUser);
 app.use(verifyToken);
 app.post('/auth/password', changePassword);
 app.get('/search/accounts', retrieveProfile);
+app.post('/accounts/follow', followUser);
 
 app.use(handleError);
 
 const runServer = () => {
   connectDb(process.env.MONGO_URL)
     .then(() => console.log('connected to the db'))
-    .catch(() => {
+    .catch((err) => {console.log(err);
       process.exitCode = 1;
       return process.exit();
     });
